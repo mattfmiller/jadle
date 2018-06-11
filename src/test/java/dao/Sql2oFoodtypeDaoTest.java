@@ -117,4 +117,12 @@ public class Sql2oFoodtypeDaoTest {
         foodtypeDao.deleteById(testFoodtype.getId());
         assertEquals(0, foodtypeDao.getAllRestaurantsForAFoodtype(testFoodtype.getId()).size());
     }
+
+    @Test
+    public void findById() {
+        Foodtype foodtype = setupNewFoodtype();
+        foodtypeDao.add(foodtype);
+        Foodtype foundFoodtype = foodtypeDao.findById(foodtype.getId());
+        assertEquals(foodtype, foundFoodtype);
+    }
 }
