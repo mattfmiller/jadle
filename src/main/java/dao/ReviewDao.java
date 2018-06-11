@@ -10,7 +10,7 @@ public interface ReviewDao {
 
     //read
     List<Review> getAll();
-    List<Review> getAllReviewsByRestaurant(int restaurantId);
+    List<Review> getAllReviewsByRestaurantId(int restaurantId);
 
     //update
     //omit for now
