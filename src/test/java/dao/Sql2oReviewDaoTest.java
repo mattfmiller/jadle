@@ -59,7 +59,6 @@ public class Sql2oReviewDaoTest {
         assertEquals(2, reviewDao.getAllReviewsByRestaurantId(restuarantId).size());
         assertTrue(reviewDao.getAllReviewsByRestaurantId(restuarantId).contains(review3));
         assertFalse(reviewDao.getAllReviewsByRestaurantId(restuarantId).contains(review1));
-
     }
 
     @Test
@@ -74,7 +73,6 @@ public class Sql2oReviewDaoTest {
         assertEquals(2, reviewDao.getAll().size());
         assertTrue(reviewDao.getAll().contains(review));
         assertFalse(reviewDao.getAll().contains(review2));
-
     }
 
     @Test
