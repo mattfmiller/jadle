@@ -94,18 +94,6 @@ public class Sql2oReviewDaoTest {
         assertEquals(0, reviewDao.getAll().size());
     }
 
-//    @Test
-//    public void timeStampIsReturnedCorrectly() throws Exception {
-//        Restaurant testRestaurant = setupNewRestaurant();
-//        restaurantDao.add(testRestaurant);
-//        Review testReview = new Review("foodcoma!", "Captain Kirk", 3, testRestaurant.getId());
-//        reviewDao.add(testReview);
-//
-//        long creationTime = testReview.getCreatedat();
-//        long savedTime = reviewDao.getAll().get(0).getCreatedat();
-//        assertEquals(creationTime, savedTime);
-//    }
-
     @Test
     public void timeStampIsReturnedCorrectly() throws Exception {
         Restaurant testRestaurant = setupNewRestaurant();
@@ -120,6 +108,7 @@ public class Sql2oReviewDaoTest {
         assertEquals(formattedCreationTime,formattedSavedTime);
         assertEquals(creationTime, savedTime);
     }
+
 
     @Test
     public void reviewsAreReturnedInCorrectOrder() throws Exception {
@@ -137,6 +126,27 @@ public class Sql2oReviewDaoTest {
         Review testSecondReview = new Review("passable", "Mr Spock", 1, testRestaurant.getId());
         reviewDao.add(testSecondReview);
 
-        assertEquals("passable", reviewDao.getAllReviewsByRestaurantIdSortedNewestToOldest(testRestaurant.getId()).get(0).getContent());
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+
+        Review testThirdReview = new Review("bloody good grub!", "Scotty", 4, testRestaurant.getId());
+        reviewDao.add(testThirdReview);
+
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+
+        Review testFourthReview = new Review("I prefer home cooking", "Mr. Sulu", 2, testRestaurant.getId());
+        reviewDao.add(testFourthReview);
+
+        assertEquals(4, reviewDao.getAllReviewsByRestaurantId(testRestaurant.getId()).size());
+        assertEquals("I prefer home cooking", reviewDao.getAllReviewsByRestaurantIdSortedNewestToOldest(testRestaurant.getId()).get(0).getContent());
     }
 }

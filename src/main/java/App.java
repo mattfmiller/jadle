@@ -10,6 +10,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -66,8 +67,8 @@ public class App {
         post("/restaurants/:restaurantId/reviews/new", "application/json", (req, res) -> {
             int restaurantId = Integer.parseInt(req.params("restaurantId"));
             Review review = gson.fromJson(req.body(), Review.class);
-
-            review.setRestaurantId(restaurantId); //we need to set this separately because it comes from our route, not our JSON input.
+            review.setCreatedat();
+            review.setRestaurantId(restaurantId);
             reviewDao.add(review);
             res.status(201);
             return gson.toJson(review);
@@ -126,6 +127,17 @@ public class App {
             else {
                 return gson.toJson(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId));
             }
+        });
+
+        get("/restaurants/:id/sortedReviews", "application/json", (req, res) -> {
+            int restaurantId = Integer.parseInt(req.params("id"));
+            Restaurant restaurantToFind = restaurantDao.findById(restaurantId);
+            List<Review> allReviews;
+            if (restaurantToFind == null){
+                throw new ApiException(404, String.format("No restaurant with the id: \"%s\" exists", req.params("id")));
+            }
+            allReviews = reviewDao.getAllReviewsByRestaurantIdSortedNewestToOldest(restaurantId);
+            return gson.toJson(allReviews);
         });
 
         exception(ApiException.class, (exception, req, res) -> {
