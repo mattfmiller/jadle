@@ -1,6 +1,6 @@
 # Jadle
 
-#### An app  that allows users to add, view, and review local restaurants. _This is an Epicodus exercise that is a work in progress_
+#### An API that allows users to add, view, and review local restaurants. _This is an Epicodus exercise that is a work in progress_
 
 #### By _**Matt Miller**_
 
